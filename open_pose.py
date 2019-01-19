@@ -213,3 +213,35 @@ def detect_humans(image, in_height=328):
             cv2.line(frame_clone, (b[0], a[0]), (b[1], a[1]), colors[i], 3, cv2.LINE_AA)
 
     return frame_clone, res_keypoints
+
+
+def extract_keypoints(keypoints):
+    for i in keypoints:
+        while len(keypoints[i]) != 3:
+            keypoints[i].append((0, 0, 0))
+
+    return keypoints
+
+
+
+if __name__ == '__main__':
+
+    import time
+    filename = 'gta-0.mp4'
+
+    json = {filename: []}
+
+    cap = cv2.VideoCapture('data/' + filename)
+
+    for i in range(30 * 30):
+
+        ret, frame = cap.read()
+
+        if ret:
+            t0 = time.time()
+            clone_frame, keypoints = detect_humans(frame)
+            print(extract_keypoints(keypoints))
+
+            t1 = time.time()
+
+            print(t1 - t0)
