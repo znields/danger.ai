@@ -32,7 +32,7 @@ def get_furthest_word(words, word2vect, ret_vect=False):
 	vectlist = []
 	for word in words:
 		#unknown word? 
-		if word not in word2vect: return word
+		#if word not in word2vect: return word
 		#normalize.
 		vectlist.append(word2vect[word]/np.linalg.norm(word2vect[word]))
 		print(vectlist[len(vectlist)-1].shape)
