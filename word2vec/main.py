@@ -25,21 +25,28 @@ def load_word2vec(dir):
 		word2vec.update(iword2vec)
 		
 	return word2vec
-    
-def get_furthest_word(words, word2vect):
+
+
+
+def get_furthest_word(words, word2vect, ret_vect=False):
 	vectlist = []
 	for word in words:
 		#unknown word? 
 		if word not in word2vect: return word
 		#normalize.
 		vectlist.append(word2vect[word]/np.linalg.norm(word2vect[word]))
+		print(vectlist[len(vectlist)-1].shape)
+		
+	if ret_vect:
+		return vectlist
+	
 	mean = np.array(vectlist).mean(axis=0)
 	mean = mean / np.linalg.norm(mean)
 	
 	#figure out which is furthest
 	dists = [np.linalg.norm(v - mean) for v in vectlist]
 	return words[np.argmax(dists)]
-
+'''
 def cluster_vects(word2vect):
 	#use sklearn minibatch kmeans to cluster the vectors.
 	clusters = kmeans(n_clusters= 25, max_iter=10,batch_size=200,
@@ -54,7 +61,8 @@ def cluster_vects(word2vect):
 	#now we can get a mapping from word->label
 	#which will let us figure out which other words are in the same cluster
 	return {word:label for word,label in zip(y,clusters.labels_)}
-	
+'''
+'''
 def words_in_cluster(word, word_to_label):
 	#sorry, this is O(n), n is pretty large
 	#it could be O(k), k=cluster size, but that would cost more memory
@@ -62,6 +70,15 @@ def words_in_cluster(word, word_to_label):
 	#get the other words with this label
 	similar_words = [key for key,val in word_to_label.iteritems() if val==label]
 	return similar_words
+'''
+
+def gen_vectors(word_list):
+	word2vec = load_word2vec('vectors')
+	
+	return get_furthest_word(word_list, word2vec, ret_vect=True)
+
+
+
 
 def main():
 	print('loading knowledge from Wikipedia...should take 10-20 seconds')
@@ -70,6 +87,8 @@ def main():
 	while (True):
 		words = input('->').lower().split(' ')
 		print('I think',get_furthest_word(words, word2vec),'doesnt belong in this list!\n')
-			
+
+
+		
 if __name__ == '__main__':
     main()
