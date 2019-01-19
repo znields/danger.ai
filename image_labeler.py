@@ -5,55 +5,43 @@ import time
 import numpy as np
 
 
-def label_image(in_path, out_name='labels', num_frames=548):
+def label_image(in_path, num_frames=540):
 
-	cv2.namedWindow("stream")
+    cap = cv2.VideoCapture(in_path)
 
-	cap = cv2.VideoCapture(in_path)
+    path, ext = in_path.split('.')
 
-	outputs = []
+    outputs = []
 
+    for i in range(num_frames):
 
+        for _ in range(14):
+            cap.read()
 
-	num_frames = 123
+        ret, frame = cap.read()
 
-	for i in range(num_frames):
-	retval, frame = cap.read()
-	if retval:
-		cv2.imshow("stream", frame)
-		# press 'q' to quit
-		key = cv2.waitKey(-1) & 0xFF
-		if key == ord('1'):
-			outputs.append(1)
-		if key == ord('0'):
-			outputs.append(0)
-			
-	else:
-		break
-		
-	cap.release()
-	cv2.destroyAllWindows()        
-		
-	 
+        if ret:
 
-	np_outputs = np.asarray(outputs)
+            cv2.imshow("Video", frame)
 
-	np.save(out_name+".npy", np_outputs)
+            key = cv2.waitKey(-1) & 0xFF
+            if key == ord('1'):
+                outputs.append(1)
 
+            if key == ord('0'):
+                outputs.append(0)
 
-def get_input():
-    i = int(input())
-    if i == 1 or i == 0:
-        return i
-    else:
-        return get_input()
+        else:
+            break
 
+    cap.release()
+    cv2.destroyAllWindows()
 
-def get_filename(folder, path):
-    path = os.path.basename(path)
-    name, _ = os.path.splitext(path)
-    return folder + '/' + name + '.csv'
+    np_outputs = np.asarray(outputs)
 
+    np.save(path + ".npy", np_outputs)
 
 if __name__ == '__main__':
-    label_image('data/Fight_RunAway1.mpg')
+    label_image('data/gta-0.mp4')
+
+
