@@ -1,13 +1,10 @@
-import csv
 import cv2
-import os
-import time
 import numpy as np
 
 
 def label_image(in_path, num_frames=540):
 
-    cap = cv2.VideoCapture(in_path)
+    cap = cv2.VideoCapture('data/' + in_path)
 
     path, ext = in_path.split('.')
 
@@ -39,9 +36,9 @@ def label_image(in_path, num_frames=540):
 
     np_outputs = np.asarray(outputs)
 
-    np.save(path + ".npy", np_outputs)
+    np.save('openpose/' + path + "-y.npy", np_outputs)
 
 if __name__ == '__main__':
-    label_image('data/gta-0.mp4')
+    label_image('gta-0.mp4')
 
 
