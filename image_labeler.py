@@ -5,12 +5,13 @@ import numpy as np
 def label_image(in_path, num_frames=540):
 
     cap = cv2.VideoCapture('data/' + in_path)
+    print(cap.get(cv2.CAP_PROP_FPS))
 
     path, ext = in_path.split('.')
 
     outputs = []
 
-    for i in range(num_frames):
+    for i in range(num_frames // 15):
 
         for _ in range(14):
             cap.read()
@@ -25,7 +26,7 @@ def label_image(in_path, num_frames=540):
             if key == ord('1'):
                 outputs.append(1)
 
-            if key == ord('0'):
+            elif key == ord('0'):
                 outputs.append(0)
 
         else:
