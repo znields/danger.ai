@@ -27,7 +27,6 @@ MANIFEST
 /.idea/*
 /data/*
 /models/*
-/openpose/*
 
 
 # PyInstaller

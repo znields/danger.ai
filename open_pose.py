@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import time
 
 protoFile = "models/pose_deploy_linevec.prototxt"
 weightsFile = "models/pose_iter_440000.caffemodel"
@@ -146,7 +147,7 @@ def get_personwise_keypoints(valid_pairs, invalid_pairs, keypoints_list):
                 if found:
                     personwise_keypoints[person_idx][index_b] = part_bs[i]
                     personwise_keypoints[person_idx][-1] += keypoints_list[part_bs[i].astype(int), 2] + \
-                        valid_pairs[k][i][2]
+                                                            valid_pairs[k][i][2]
 
                 # if find no partA in the subset, create a new subset
                 elif not found and k < 17:
@@ -159,7 +160,7 @@ def get_personwise_keypoints(valid_pairs, invalid_pairs, keypoints_list):
     return personwise_keypoints
 
 
-def detect_humans(image, in_height=328):
+def detect_humans(image, in_height=40):
     width = image.shape[1]
     height = image.shape[0]
 
@@ -217,29 +218,86 @@ def detect_humans(image, in_height=328):
 
 def extract_keypoints(keypoints):
     for i in keypoints:
-        while len(keypoints[i]) != 3:
+        while len(keypoints[i]) < 3:
             keypoints[i].append((0, 0, 0))
+        while len(keypoints[i]) > 3:
+            keypoints[i].pop()
 
     return keypoints
 
-if __name__ == '__main__':
 
-    import time
-    filename = 'gta-0.mp4'
-
-    json = {filename: []}
+def run_open_pose(filename, starting_frame=0):
+    path, ext = filename.split('.')
+    X = np.zeros(shape=(162, 540))
 
     cap = cv2.VideoCapture('data/' + filename)
 
-    for i in range(30 * 30):
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    out = cv2.VideoWriter('data/' + path + '-openpose-' + str(int(starting_frame > 0)) + '.avi', fourcc, 25,
+                          (int(cap.get(3)), int(cap.get(4))))
 
+    for i in range(starting_frame):
+        print('skipped frame no. ' + str(i))
+        cap.read()
+
+    for i in range(30 * 18):
+
+        print('frame no. ' + str(i) + ' of 540')
         ret, frame = cap.read()
 
+        print(ret)
         if ret:
             t0 = time.time()
+            print('detecting humans...')
             clone_frame, keypoints = detect_humans(frame)
-            print(extract_keypoints(keypoints))
+            print('done')
+            print('extracting keypoints')
+            keyp = extract_keypoints(keypoints)
+            print('done')
+            x = list()
+            for k in keyp:
+                for v in range(3):
+                    for l in keyp[k][v]:
+                        x.append(l)
+            X[:, i] = x
+
+            del keyp
+            del keypoints
+
+            out.write(clone_frame)
+
+            cv2.imshow('frame', clone_frame)
+
+            del clone_frame
 
             t1 = time.time()
-
             print(t1 - t0)
+
+    np.save('openpose/' + path + '-' + str(int(starting_frame > 0)) + '.npy', X)
+    print('dumped')
+
+    cap.release()
+    out.release()
+
+    del cap
+    del out
+
+
+if __name__ == '__main__':
+    run_open_pose('gta-0.mp4', 0)
+#     run_open_pose('gta-0.mp4', 540)
+
+#     run_open_pose('swamphacks-0.mp4', 0)
+#     run_open_pose('swamphacks-0.mp4', 540)
+
+#     run_open_pose('swamphacks-1.mp4', 0)
+#     run_open_pose('swamphacks-1.mp4', 540)
+
+#     run_open_pose('swamphacks-2.mp4', 0)
+#     run_open_pose('swamphacks-2.mp4', 540)
+
+#     run_open_pose('swamphacks-3.mp4', 0)
+#     run_open_pose('swamphacks-3.mp4', 540)
+
+#     run_open_pose('walmart-0.mp4', 0)
+#     run_open_pose('walmart-0.mp4', 540)

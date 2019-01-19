@@ -43,11 +43,11 @@ def label_image(in_path, num_frames=540, starting_frame=0):
 
 
 if __name__ == '__main__':
-    for i in range(1):
-        label_image('gta-' + str(i) + '.mp4', starting_frame=0)
-        label_image('gta-' + str(i) + '.mp4', starting_frame=540)
+    # for i in range(1):
+    #     label_image('gta-' + str(i) + '.mp4', starting_frame=0)
+    #     label_image('gta-' + str(i) + '.mp4', starting_frame=540)
 
-    for i in range(4):
+    for i in range(5, 7):
         label_image('swamphacks-' + str(i) + '.mp4', starting_frame=0)
         label_image('swamphacks-' + str(i) + '.mp4', starting_frame=540)
 
