@@ -2,39 +2,43 @@ import csv
 import cv2
 import os
 import time
+import numpy as np
 
 
-def label_image(in_path, out_folder='labels', max_frames=1500):
+def label_image(in_path, out_name='labels', num_frames=548):
 
-    cap = cv2.VideoCapture(in_path)
-    filename = get_filename(out_folder, in_path)
-    csv_file = open(filename, mode='w')
-    writer = csv.writer(csv_file)
+	cv2.namedWindow("stream")
 
-    while True:
+	cap = cv2.VideoCapture(in_path)
 
-        # read 15 frames
-        i = 15
-        while cap.isOpened() and i:
-            cap.read()
-            i -= 1
-
-        ret, frame = cap.read()
-
-        if ret:
-
-            cv2.imshow('Image', frame)
-
-            # if the user presses the q key, quit
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+	outputs = []
 
 
 
-            # writer.writerow([get_input()])
+	num_frames = 123
 
-        else:
-            break
+	for i in range(num_frames):
+	retval, frame = cap.read()
+	if retval:
+		cv2.imshow("stream", frame)
+		# press 'q' to quit
+		key = cv2.waitKey(-1) & 0xFF
+		if key == ord('1'):
+			outputs.append(1)
+		if key == ord('0'):
+			outputs.append(0)
+			
+	else:
+		break
+		
+	cap.release()
+	cv2.destroyAllWindows()        
+		
+	 
+
+	np_outputs = np.asarray(outputs)
+
+	np.save(out_name+".npy", np_outputs)
 
 
 def get_input():
