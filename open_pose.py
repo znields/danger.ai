@@ -222,8 +222,6 @@ def extract_keypoints(keypoints):
 
     return keypoints
 
-
-
 if __name__ == '__main__':
 
     import time

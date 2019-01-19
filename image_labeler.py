@@ -2,10 +2,12 @@ import cv2
 import numpy as np
 
 
-def label_image(in_path, num_frames=540):
+def label_image(in_path, num_frames=540, starting_frame=0):
 
     cap = cv2.VideoCapture('data/' + in_path)
     print(cap.get(cv2.CAP_PROP_FPS))
+    for _ in range(starting_frame):
+        cap.read()
 
     path, ext = in_path.split('.')
 
@@ -37,9 +39,16 @@ def label_image(in_path, num_frames=540):
 
     np_outputs = np.asarray(outputs)
 
-    np.save('openpose/' + path + "-y.npy", np_outputs)
+    np.save('openpose/' + path + '-' + str(int(starting_frame > 0)) + "-y.npy", np_outputs)
+
 
 if __name__ == '__main__':
-    label_image('gta-0.mp4')
+    for i in range(1):
+        label_image('gta-' + str(i) + '.mp4', starting_frame=0)
+        label_image('gta-' + str(i) + '.mp4', starting_frame=540)
+
+    for i in range(4):
+        label_image('swamphacks-' + str(i) + '.mp4', starting_frame=0)
+        label_image('swamphacks-' + str(i) + '.mp4', starting_frame=540)
 
 
