@@ -30,10 +30,3 @@ def avg(ds1, ds2, ds3):
 def linear_combination(ds1, ds2, ds3, x, y, z):
 	return ds1*x + ds2*y + ds3*z
 
-	
-
-
-
-
-
-
