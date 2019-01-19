@@ -41,14 +41,24 @@ def label_image(in_path, num_frames=540, starting_frame=0):
 
     np.save('openpose/' + path + '-' + str(int(starting_frame > 0)) + "-y.npy", np_outputs)
 
+    return np_outputs
+
 
 if __name__ == '__main__':
-    # for i in range(1):
-    #     label_image('gta-' + str(i) + '.mp4', starting_frame=0)
-    #     label_image('gta-' + str(i) + '.mp4', starting_frame=540)
+    for i in range(1):
+        print(label_image('gta-' + str(i) + '.mp4', starting_frame=0).size == 36)
+        print(label_image('gta-' + str(i) + '.mp4', starting_frame=540).size == 36)
 
-    for i in range(5, 7):
-        label_image('swamphacks-' + str(i) + '.mp4', starting_frame=0)
-        label_image('swamphacks-' + str(i) + '.mp4', starting_frame=540)
+    for i in range(2):
+        print(label_image('robery-' + str(i) + '.mp4', starting_frame=0).size == 36)
+        print(label_image('robery-' + str(i) + '.mp4', starting_frame=540).size == 36)
 
+    for i in range(1):
+        print(label_image('walmart-' + str(i) + '.mp4', starting_frame=0).size == 36)
+        print(label_image('walmart-' + str(i) + '.mp4', starting_frame=540).size == 36)
+
+    # for i in range(0, 8):
+    #     print('swamphacks-' + str(i))
+    #     print(label_image('swamphacks-' + str(i) + '.mp4', starting_frame=0).size == 36)
+    #     print(label_image('swamphacks-' + str(i) + '.mp4', starting_frame=540).size == 36)
 
