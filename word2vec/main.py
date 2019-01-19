@@ -47,9 +47,9 @@ def cluster_vects(word2vect):
 	X = np.array([i.T for i in word2vect.itervalues()])
 	y = [i for i in word2vect.iterkeys()]
 	
-	print 'fitting kmeans, may take some time'
+	print('fitting kmeans, may take some time')
 	clusters.fit(X)
-	print 'done.'
+	print('done.')
 	
 	#now we can get a mapping from word->label
 	#which will let us figure out which other words are in the same cluster
@@ -64,12 +64,12 @@ def words_in_cluster(word, word_to_label):
 	return similar_words
 
 def main():
-	print 'loading knowledge from Wikipedia...should take 10-20 seconds'
+	print('loading knowledge from Wikipedia...should take 10-20 seconds')
 	word2vec = load_word2vec('vectors')
-	print 'Type several words separated by spaces. The more words you enter, the better I can guess.'
+	print('Type several words separated by spaces. The more words you enter, the better I can guess.')
 	while (True):
-		words = raw_input('->').lower().split(' ')
-		print 'I think',get_furthest_word(words, word2vec),'doesnt belong in this list!\n'
+		words = input('->').lower().split(' ')
+		print('I think',get_furthest_word(words, word2vec),'doesnt belong in this list!\n')
 			
 if __name__ == '__main__':
     main()
