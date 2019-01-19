@@ -27,6 +27,7 @@ MANIFEST
 /.idea/*
 /data/*
 /models/*
+word2vec/vectors/*
 
 
 # PyInstaller
@@ -117,3 +118,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .idea/workspace.xml
+SwampHacks2019-6ee04421862a.json
