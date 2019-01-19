@@ -36,7 +36,6 @@ def get_furthest_word(words, word2vect, ret_vect=False):
 		if word not in word2vect: continue
 		#normalize.
 		vectlist.append(word2vect[word]/np.linalg.norm(word2vect[word]))
-		print(vectlist[len(vectlist)-1].shape)
 		
 	if ret_vect:
 		return vectlist
@@ -73,8 +72,9 @@ def words_in_cluster(word, word_to_label):
 	return similar_words
 '''
 
+word2vec = load_word2vec('word2vec/vectors')
+
 def gen_vectors(word_list):
-	word2vec = load_word2vec('vectors')
 	
 	return get_furthest_word(word_list, word2vec, ret_vect=True)
 
@@ -83,7 +83,7 @@ def gen_vectors(word_list):
 
 def main():
 	print('loading knowledge from Wikipedia...should take 10-20 seconds')
-	word2vec = load_word2vec('vectors')
+	word2vec = load_word2vec('word2vec/vectors')
 	print('Type several words separated by spaces. The more words you enter, the better I can guess.')
 	while (True):
 		words = input('->').lower().split(' ')

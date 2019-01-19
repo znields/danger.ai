@@ -3,6 +3,7 @@ import io
 from os import listdir
 from os.path import isfile, join
 from word2vec.main import gen_vectors
+import numpy as np
 
 def analyze_video(path):
     """Detect labels given a file path."""
@@ -16,7 +17,7 @@ def analyze_video(path):
         features=features, input_content=input_content)
     print('\nProcessing video for label annotations:')
 
-    result = operation.result(timeout=90)
+    result = operation.result(timeout=180)
     print('\nFinished processing.')
 
     objects = {}
@@ -38,7 +39,7 @@ def analyze_video(path):
 
 def create_frames(objects):
     print(objects)
-    frames = [list() for i in range(540 // 15)]
+    frames = [list() for _ in range(540 // 15)]
     curr_t = 0.5
     idx = 0
     while curr_t <= 36.0:
@@ -53,12 +54,25 @@ def create_frames(objects):
 if __name__ == '__main__':
 
     paths = [f for f in listdir('data') if isfile(join('data', f))]
+    res = []
     print(paths)
-    for i in paths:
-        annotations = analyze_video('data/' + i)
+    for i in range(len(paths))[6:]:
+        W = np.zeros((72, 250, 3))
+        annotations = analyze_video('data/' + paths[i])
         fs = create_frames(annotations)
-        for i in fs:
-            if type(gen_vectors(i)) == str:
+        for k in range(len(fs)):
+            words = np.zeros((250, 3))
+            vecs = gen_vectors(fs[k][:max(3, len(fs))])
+            for j in range(3):
+                if j < len(vecs):
+                    words[:, j] = vecs[j].tolist()
+
+            W[k, :, :] = words
+
+        np.save('word2vec/data/' + paths[i][:-4] + '.npy', W)
+
+
+
 
 
 
