@@ -12,7 +12,7 @@ def y_data_get():
     
     y_list = []
     
-    num_examples = 11
+    num_examples = 12
     
     rootDir = r"C:\Users\Mitchell\Documents\GitHub\attention.ai\openpose\y"
     
@@ -40,7 +40,7 @@ def x_data_get():
     
     x_list = []
     
-    num_examples = 1 #total number of vidoes, not npy files, assuming each video has 2 npy files
+    num_examples = 12 #total number of vidoes, not npy files, assuming each video has 2 npy files
     
     rootDir = r"C:\Users\Mitchell\Documents\GitHub\attention.ai\openpose\x"
     
@@ -96,7 +96,10 @@ model.add(LSTM(100, input_shape = (15,162)))
 model.add(Dense(1, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 print(model.summary())
-model.fit(train_x_list[0], train_y_list[0], epochs=3, batch_size=64)
+model.fit(train_x_list[0], train_y_list[0], epochs=10, batch_size=64)
 # Final evaluation of the model
-#scores = model.evaluate(X_test, y_test, verbose=0)
-#print("Accuracy: %.2f%%" % (scores[1]*100))
+scores = model.evaluate(train_x, train_y, verbose=0)
+print("Accuracy: %.2f%%" % (scores[1]*100))
+
+preds = model.predict(train_x)
+np.save("predictions.npy", preds)
