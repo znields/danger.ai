@@ -31,6 +31,7 @@ if __name__ == '__main__':
             summ += calculate_pixel_change(c, p)
             if (i + 1) % 15 == 0:
                 scores[i // 15] = (summ / 15)
+                summ = 0
 
         print(path)
         np.save('data/' + path[:-4] + '.npy', scores)
