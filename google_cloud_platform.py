@@ -56,14 +56,14 @@ if __name__ == '__main__':
     paths = [f for f in listdir('data') if isfile(join('data', f))]
     res = []
     print(paths)
-    for i in range(len(paths))[6:]:
-        W = np.zeros((72, 250, 3))
+    for i in range(len(paths)):
+        W = np.zeros((72, 250, 10))
         annotations = analyze_video('data/' + paths[i])
         fs = create_frames(annotations)
         for k in range(len(fs)):
-            words = np.zeros((250, 3))
-            vecs = gen_vectors(fs[k][:max(3, len(fs))])
-            for j in range(3):
+            words = np.zeros((250, 10))
+            vecs = gen_vectors(fs[k][:max(10, len(fs))])
+            for j in range(10):
                 if j < len(vecs):
                     words[:, j] = vecs[j].tolist()
 

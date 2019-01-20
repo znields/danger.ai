@@ -1,6 +1,6 @@
 import cv2
 import imutils
-from pixel_change import calculate_pixel_change
+from pixel.pixel_change import calculate_pixel_change
 from open_pose import detect_humans
 
 
