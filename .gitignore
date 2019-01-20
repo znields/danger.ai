@@ -28,6 +28,7 @@ MANIFEST
 /data/*
 /models/*
 word2vec/vectors/*
+videos/*
 
 
 # PyInstaller
