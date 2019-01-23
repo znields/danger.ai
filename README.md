@@ -10,8 +10,6 @@ Uses a diverse set of machine learning technologies to detect danger in surveill
 
 ## How we built it
 
-<img src="https://raw.githubusercontent.com/isaiahnields/danger.ai/master/diagram.png" width="700">
-
 ### GCP Storage
 - Used a GCP Storage bucket to hold the processed video footage
 
@@ -23,6 +21,8 @@ Uses a diverse set of machine learning technologies to detect danger in surveill
     - Save danger score data into Cloud Firestore
     - Save processed video footage into GCP Storage
     - Retrieve danger score data from Cloud Firestore
+
+<img src="https://raw.githubusercontent.com/isaiahnields/danger.ai/master/diagram.png" width="700">
 
 ### GCP Video Intelligence
 - Used the GCP video intelligence API to detect objects throughout the video streams.
