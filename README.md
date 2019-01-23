@@ -10,6 +10,8 @@ Uses a diverse set of machine learning technologies to detect danger in surveill
 
 ## How we built it
 
+<img src="https://raw.githubusercontent.com/isaiahnields/danger.ai/master/diagram.png" width="700">
+
 ### GCP Storage
 - Used a GCP Storage bucket to hold the processed video footage
 
