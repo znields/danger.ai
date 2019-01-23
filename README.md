@@ -6,6 +6,8 @@
 ## What it does
 Uses a diverse set of machine learning technologies to detect danger in surveillance videos
 
+<img src="https://raw.githubusercontent.com/isaiahnields/danger.ai/master/gif.gif" width="400">
+
 ## How we built it
 
 ### GCP Storage
