@@ -172,7 +172,6 @@ def detect_humans(image, in_height=40):
 
     net.setInput(in_blob)
     output = net.forward()
-    # print("Time Taken in forward pass = {}".format(time.time() - t))
 
     detected_keypoints = []
     keypoints_list = np.zeros((0, 3))

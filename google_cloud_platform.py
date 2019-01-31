@@ -5,6 +5,7 @@ from os.path import isfile, join
 from word2vec.main import gen_vectors
 import numpy as np
 
+
 def analyze_video(path):
     """Detect labels given a file path."""
     video_client = videointelligence.VideoIntelligenceServiceClient.from_service_account_json('SwampHacks2019-6ee04421862a.json')

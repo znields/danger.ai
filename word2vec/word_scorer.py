@@ -2,12 +2,13 @@ import numpy as np
 from os import listdir
 from os.path import isfile, join
 
+
 def calculate_score(W, D):
     total_distance = 0
     for i in range(D.shape[1]):
         diff = W + np.random.rand(250, 1) * 0.1 - D[:, i].reshape(250, 1)
         total_distance += np.sqrt(np.sum(diff ** 2))
-    return 1 / (total_distance)
+    return 1 / total_distance
 
 
 paths = [f for f in listdir('data') if isfile(join('data', f))]
