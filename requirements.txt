@@ -17,7 +17,7 @@ Keras-Preprocessing==1.0.5
 Markdown==3.0.1
 numpy==1.16.0
 opencv-python==4.0.0.21
-protobuf==3.6.1
+protobuf==3.18.3
 pyasn1==0.4.5
 pyasn1-modules==0.2.3
 pytz==2018.9
